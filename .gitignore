@@ -1,0 +1,12 @@
+__pycache__
+
+.venv
+.env
+
+*.swp
+*.swo
+
+*.pyc
+*.log
+
+*.bak
