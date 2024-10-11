@@ -1,0 +1,38 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    height: 100%;
+    gap: 5px;
+    border-radius: var(--border-radius-2);
+
+    .rect {
+        width: 12px;
+        height: 100%;
+        background: var(--color-1);
+        border-radius: var(--border-radius-3) 0 0 var(--border-radius-3);
+    }
+
+    .content {
+        display: flex;
+        color: var(--color-2);
+
+        h3 {
+            font-size: 20px;
+            padding: 6px;
+            margin: 0;
+            width: 100%;
+            color: var(--color-4);
+        }
+        p {
+            font-size: 16px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+
+    &.active h3 {
+        color: var(--color-primary);
+    }
+}

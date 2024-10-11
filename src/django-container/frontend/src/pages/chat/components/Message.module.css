@@ -1,0 +1,36 @@
+.message {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    padding: 10px 16px;
+
+    --message-bg: var(--color-2);
+    background-color: var(--message-bg);
+    color: var(--color-1);
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius-2);
+
+    &.own {
+        --message-bg: var(--color-3);
+        color: var(--color-2);
+    }
+
+    &.own::before,
+    &:not(.own)::after {
+        content: "";
+        height: 100%;
+        width: 14px;
+        margin: 12px;
+
+        background-color: var(--message-bg);
+        border-radius: var(--border-radius-2);
+        box-shadow: var(--shadow);
+    }
+
+    .content {
+    }
+    .author {
+    }
+    .time {
+    }
+}
