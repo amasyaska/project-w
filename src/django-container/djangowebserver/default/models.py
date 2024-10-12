@@ -11,12 +11,12 @@ class PostType(models.Model):
 
 
 class CustomUser(AbstractUser):
-    role = models.ForeignKey(UserRole, on_delete=models.SET_NULL, related_name='users')
+    role = models.ForeignKey(UserRole, null=True, on_delete=models.SET_NULL, related_name='users')
 
 
 class Post(models.Model):
     title = models.CharField(max_length=250)
     content = models.TextField()
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='posts')
-    post_type = models.ForeignKey(PostType, on_delete=models.SET_NULL, related_name='posts')
+    post_type = models.ForeignKey(PostType, null=True, on_delete=models.SET_NULL, related_name='posts')
 
