@@ -5,9 +5,9 @@ by Wombats, Inc.
 1. ```git clone https://github.com/amasyaska/project-w.git```
 2. create .env file in src/django-container, add SECRET_KEY, DJANGO_ALLOWED_HOSTS, DEBUG
    ```
-   SECRET_KEY=
-   DJANGO_ALLOWED_HOSTS=
-   DEBUG=
+   SECRET_KEY={your SECRET_KEY here}
+   DJANGO_ALLOWED_HOSTS={your Django ALLOWED_HOSTS here, separated by space}
+   DEBUG={True or False}
    ```
 3. ```cd src```
 4. ```docker compose build```
