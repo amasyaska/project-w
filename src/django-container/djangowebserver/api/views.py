@@ -3,7 +3,7 @@ from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
-from ..default.models import CustomUser
+from .models import CustomUser
 
 # Create your views here.
 class UserAPIView(APIView):
