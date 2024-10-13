@@ -1,4 +1,4 @@
-from djangowebserver.default.models import CustomUser, Post
+from default.models import CustomUser, Post
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
