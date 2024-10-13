@@ -12,11 +12,13 @@ class UserAPIView(APIView):
         try:
             return CustomUser.objects.get(pk=pk)
         except CustomUser.DoesNotExist:
-            return Response(data='User not found!', status=status.HTTP_404_NOT_FOUND)
+            return None
 
 
     def get(self, request, pk):
         user = self.get_object(pk)
+        if user is None:
+            return Response(data='User not found!', status=status.HTTP_404_NOT_FOUND)
         serializer = UserSerializer(user)
         return Response(data=serializer.data, status=200)
 
