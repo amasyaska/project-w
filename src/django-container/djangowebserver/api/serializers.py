@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-from .models import CustomUser, Post
+from .models import CustomUser, Post, UserRole
 
 
 # FIELDS
@@ -13,12 +13,10 @@ class UserRoleField(serializers.Field):
     """
 
     def to_representation(self, value):
-        # implement your logic here
-        return super().to_representation(value)
+        return value.name
     
     def to_internal_value(self, data):
-        # implement your logic here
-        return super().to_internal_value(data)
+        return UserRole(name=data)
 
 # SERIALIZERS
 
