@@ -10,3 +10,5 @@ __pycache__
 *.log
 
 *.bak
+*.db
+*.sqlite3
