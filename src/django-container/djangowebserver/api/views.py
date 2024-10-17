@@ -18,11 +18,16 @@ class UserAPIView(APIView):
     def get(self, request, pk):
         user = self.get_object(pk)
         serializer = UserSerializer(user)
-        return Response(data=serializer.data, status=200)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
     def post(self, request):
-        pass
+        serializer = UserSerializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            user = serializer.create(serializer.validated_data)
+            if (user is not None):
+                return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     
     def put(self, request, pk):
