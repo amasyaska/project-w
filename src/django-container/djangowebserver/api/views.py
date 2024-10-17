@@ -18,7 +18,8 @@ class UserAPIView(APIView):
     def get(self, request, pk):
         user = self.get_object(pk)
         if user is None:
-            return Response(data='User not found!', status=status.HTTP_404_NOT_FOUND)
+            return Response(data={'error': 'User not found!'}, 
+                            status=status.HTTP_404_NOT_FOUND)
         serializer = UserSerializer(user)
         return Response(data=serializer.data, status=200)
 
@@ -28,7 +29,18 @@ class UserAPIView(APIView):
 
     
     def put(self, request, pk):
-        pass
+        user = self.get_object(pk)
+        if user is None:
+            return Response(data={'error': 'User not found!'}, 
+                            status=status.HTTP_404_NOT_FOUND)
+
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(data={"error": serializer.errors}, 
+                        status=status.HTTP_400_BAD_REQUEST)
+            
 
 
     def delete(self, request, pk):
