@@ -24,13 +24,18 @@ class UserAPIView(APIView):
         return [AllowAny()]
 
 
-    def get(self, request, pk):
+    def get(self, request, pk=None):
+        if request.user.is_authenticated:
+            serializer = UserSerializer(request.user)
+            return Response(data=serializer.data, 
+                            status=status.HTTP_200_OK)
+        
         user = self.get_object(pk)
         if user is None:
             return Response(data={'error': 'User not found!'}, 
                             status=status.HTTP_404_NOT_FOUND)
         serializer = UserSerializer(user)
-        return Response(data=serializer.data, status=200)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
     def post(self, request):
