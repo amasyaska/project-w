@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 
 from .serializers import UserSerializer, LoginSerializer
 from .models import CustomUser
@@ -47,8 +47,17 @@ class LoginAPIView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
-            user = authenticate(request=request, username=request.data['username'], password=request.data['password'])
+            user = authenticate(request=request, username=serializer.data['username'], password=serializer.data['password'])
             if (user is None):
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
             login(request=request, user=user)
             return Response(status=status.HTTP_200_OK)
+        
+
+class LogoutAPIView(APIView):
+    
+    def post(self, request):
+        if request.user.is_authenticated:
+            logout(request)
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
