@@ -52,12 +52,25 @@ class UserAPIView(APIView):
 
     
     def put(self, request):
-        user = self.get_object(request.data.get('id'))
-        if user is None:
-            return Response(data={'error': 'User not found!'}, 
-                            status=status.HTTP_404_NOT_FOUND)
+        if request.data.get('id'):
+            if request.user.is_staff:
+                user = self.get_object(request.data.get('id'))
+                if user is None:
+                    return Response(data={'error': 'User not found.'}, 
+                                    status=status.HTTP_404_NOT_FOUND)
+                serializer = UserSerializer(request.user, 
+                                            data=request.data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(status=status.HTTP_200_OK)
+                return Response(data={"error": serializer.errors}, 
+                                status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(data={'error': 'Not enough rights.'}, 
+                                status=status.HTTP_403_FORBIDDEN)
 
-        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer = UserSerializer(request.user, 
+                                    data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_200_OK)
@@ -67,4 +80,18 @@ class UserAPIView(APIView):
 
 
     def delete(self, request):
-        pass
+        if request.data.get('id'):
+            if request.user.is_staff:
+                user = self.get_object(request.data.get('id'))
+                if user is None:
+                    return Response(data={'error': 'User not found.'}, 
+                                    status=status.HTTP_404_NOT_FOUND)
+                user.delete()
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(data={'error': 'Not enough rights.'}, 
+                                status=status.HTTP_403_FORBIDDEN)
+            
+        user = request.user
+        user.delete()
+        return Response(status=status.HTTP_200_OK)
