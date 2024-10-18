@@ -14,6 +14,10 @@ from pathlib import Path
 
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -78,16 +82,24 @@ WSGI_APPLICATION = 'djangowebserver.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('SQL_ENGINE'),
-        'NAME': os.getenv('SQL_DATABASE_NAME'),
-        'USER': os.getenv('SQL_DATABASE_USER'),
-        'PASSWORD': os.getenv('SQL_DATABASE_USER_PASSWORD'),
-        'HOST': os.getenv('SQL_HOST'),
-        'PORT': os.getenv('SQL_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.getenv('SQL_ENGINE'),
+#         'NAME': os.getenv('SQL_DATABASE_NAME'),
+#         'USER': os.getenv('SQL_DATABASE_USER'),
+#         'PASSWORD': os.getenv('SQL_DATABASE_USER_PASSWORD'),
+#         'HOST': os.getenv('SQL_HOST'),
+#         'PORT': os.getenv('SQL_PORT'),
+#     }
+# }
 
 
 # Password validation
@@ -133,3 +145,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # custom user model
 AUTH_USER_MODEL = 'api.CustomUser'
+
+
+# REST
+
+REST_FRAMEWORK = { 
+    'DEFAULT_AUTHENTICATION_CLASSES': [ 
+        'rest_framework.authentication.BasicAuthentication', 
+    ] 
+}

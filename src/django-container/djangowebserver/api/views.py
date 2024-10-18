@@ -1,8 +1,11 @@
 from django.shortcuts import render
+
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import UserSerializer
+from rest_framework.authentication import BasicAuthentication
+
+from .serializers import UserSerializer, LoginSerializer
 from .models import CustomUser
 
 # Create your views here.
@@ -36,3 +39,15 @@ class UserAPIView(APIView):
 
     def delete(self, request, pk):
         pass
+
+
+class LoginAPIView(APIView):
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            authenticator = BasicAuthentication()
+            # print(f'"{CustomUser.objects.filter(username=request.data['username']).values()[0]['id']}"')
+            user = authenticator.authenticate_credentials(userid=CustomUser.objects.filter(username=request.data['username']).values()[0]['id'], password=request.data['password'])
+            print(user)
+        return Response(status=status.HTTP_200_OK)

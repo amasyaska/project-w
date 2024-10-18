@@ -5,6 +5,12 @@ from django.contrib.auth.password_validation import validate_password
 from .models import CustomUser, Post, UserRole
 
 
+# VALIDATORS
+
+def username_in_database_validator(value):
+    if not CustomUser.objects.filter(username=value).exists():
+        raise serializers.ValidationError('no user with this username found')
+
 # FIELDS
 
 class UserRoleField(serializers.Field):
@@ -58,3 +64,13 @@ class UserSerializer(serializers.ModelSerializer):
                                             email=validated_data.get('email'),
                                             password=validated_data.get('password'))
         return user
+    
+
+class LoginSerializer(serializers.Serializer):
+
+    username = serializers.CharField(
+        validators=[username_in_database_validator],
+    )
+    password = serializers.CharField(
+        validators=[validate_password],
+    )
