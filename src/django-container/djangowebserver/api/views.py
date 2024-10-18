@@ -52,9 +52,6 @@ class UserAPIView(APIView):
 
     
     def put(self, request):
-        if not request.data.get('id'):
-            return Response(data={'error': 'Bad request: you need to provide user id.'}, 
-                            status=status.HTTP_400_BAD_REQUEST)
         user = self.get_object(request.data.get('id'))
         if user is None:
             return Response(data={'error': 'User not found!'}, 
