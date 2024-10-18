@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
@@ -46,8 +47,8 @@ class LoginAPIView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
-            authenticator = BasicAuthentication()
-            # print(f'"{CustomUser.objects.filter(username=request.data['username']).values()[0]['id']}"')
-            user = authenticator.authenticate_credentials(userid=CustomUser.objects.filter(username=request.data['username']).values()[0]['id'], password=request.data['password'])
+            user = authenticate(request=request, username=request.data['username'], password=request.data['password'])
+            if (user is None):
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
             print(user)
-        return Response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
