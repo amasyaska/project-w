@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from rest_framework.views import APIView 
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from .serializers import UserSerializer
 from .models import CustomUser
@@ -13,6 +14,14 @@ class UserAPIView(APIView):
             return CustomUser.objects.get(pk=pk)
         except CustomUser.DoesNotExist:
             return None
+        
+
+    def get_permissions(self):
+        method = self.request.method
+        
+        if method in ['PUT', 'DELETE']:
+            return [IsAuthenticated()]
+        return [AllowAny()]
 
 
     def get(self, request, pk):
