@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
@@ -50,5 +50,5 @@ class LoginAPIView(APIView):
             user = authenticate(request=request, username=request.data['username'], password=request.data['password'])
             if (user is None):
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
-            print(user)
+            login(request=request, user=user)
             return Response(status=status.HTTP_200_OK)
