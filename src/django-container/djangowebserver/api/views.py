@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
+from .permissions import IsNotAuthenticated
 from .serializers import UserSerializer
 from .models import CustomUser
 
@@ -21,29 +21,41 @@ class UserAPIView(APIView):
         
         if method in ['PUT', 'DELETE']:
             return [IsAuthenticated()]
+        elif method == 'POST':
+            return [IsNotAuthenticated()]
         return [AllowAny()]
 
 
-    def get(self, request, pk=None):
-        if request.user.is_authenticated:
-            serializer = UserSerializer(request.user)
+    def get(self, request):
+        if request.data.get('id'):
+            user = self.get_object(request.data.get('id'))
+            if user is None:
+                return Response(data={'error': 'User not found.'}, 
+                                status=status.HTTP_404_NOT_FOUND)
+            serializer = UserSerializer(user)
+            return Response(data=serializer.data, 
+                            status=status.HTTP_200_OK)
+        elif request.user.is_authenticated:
+            user = request.user
+            serializer = UserSerializer(user)
             return Response(data=serializer.data, 
                             status=status.HTTP_200_OK)
         
-        user = self.get_object(pk)
-        if user is None:
-            return Response(data={'error': 'User not found!'}, 
-                            status=status.HTTP_404_NOT_FOUND)
-        serializer = UserSerializer(user)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            data={'error': 'Bad request: you need to provide user id or you must be authenticated.'}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
     def post(self, request):
         pass
 
     
-    def put(self, request, pk):
-        user = self.get_object(pk)
+    def put(self, request):
+        if not request.data.get('id'):
+            return Response(data={'error': 'Bad request: you need to provide user id.'}, 
+                            status=status.HTTP_400_BAD_REQUEST)
+        user = self.get_object(request.data.get('id'))
         if user is None:
             return Response(data={'error': 'User not found!'}, 
                             status=status.HTTP_404_NOT_FOUND)
@@ -57,5 +69,5 @@ class UserAPIView(APIView):
             
 
 
-    def delete(self, request, pk):
+    def delete(self, request):
         pass
