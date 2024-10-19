@@ -1,10 +1,12 @@
 from rest_framework.views import APIView
+from django.contrib.auth import authenticate, login, logout
+from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
-from .permissions import IsNotAuthenticated
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LoginSerializer
 from .models import CustomUser
+from .permissions import IsNotAuthenticated
 
 # Create your views here.
 class UserAPIView(APIView):
@@ -48,7 +50,12 @@ class UserAPIView(APIView):
 
 
     def post(self, request):
-        pass
+        serializer = UserSerializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            user = serializer.create(serializer.validated_data)
+            if (user is not None):
+                return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     
     def put(self, request):
@@ -78,7 +85,6 @@ class UserAPIView(APIView):
                         status=status.HTTP_400_BAD_REQUEST)
             
 
-
     def delete(self, request):
         if request.data.get('id'):
             if request.user.is_staff:
@@ -95,3 +101,24 @@ class UserAPIView(APIView):
         user = request.user
         user.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+class LoginAPIView(APIView):
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            user = authenticate(request=request, username=serializer.data['username'], password=serializer.data['password'])
+            if (user is None):
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+            login(request=request, user=user)
+            return Response(status=status.HTTP_200_OK)
+        
+
+class LogoutAPIView(APIView):
+    
+    def post(self, request):
+        if request.user.is_authenticated:
+            logout(request)
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
