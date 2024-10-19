@@ -66,6 +66,20 @@ class UserSerializer(serializers.ModelSerializer):
         return user
     
 
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.content = validated_data.get('content', instance.content)
+        instance.post_type = validated_data.get('post_type', instance.post_type)
+        instance.save()
+        return instance
+    
+
 class LoginSerializer(serializers.Serializer):
 
     username = serializers.CharField(

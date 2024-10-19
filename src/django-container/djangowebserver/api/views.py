@@ -4,8 +4,8 @@ from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
-from .serializers import UserSerializer, LoginSerializer
-from .models import CustomUser
+from .serializers import UserSerializer, LoginSerializer, PostSerializer
+from .models import CustomUser, Post
 from .permissions import IsNotAuthenticated
 
 # Create your views here.
@@ -103,6 +103,38 @@ class UserAPIView(APIView):
         user = request.user
         user.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+class PostAPIView(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return None
+        
+
+    def get_permissions(self):
+        method = self.request.method
+        
+        if method != 'GET':
+            return [IsAuthenticated()]
+        return [AllowAny()]
+        
+
+    def get(self, request):
+        if request.data.get('id'):
+            post = self.get_object(request.data.get('id'))
+            if post is None:
+                return Response(data={'error': 'Post not found.'}, 
+                                status=status.HTTP_404_NOT_FOUND)
+            serializer = PostSerializer(post)
+            return Response(data=serializer.data, 
+                            status=status.HTTP_200_OK)
+        return Response(
+            data={'error': 'Bad request: you need to provide post id.'}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 class LoginAPIView(APIView):
