@@ -49,12 +49,6 @@ export default function Auth({ registering = false }) {
 
     return (
         <div className={[styles.auth, registering ? styles.register : ""].join(" ")}>
-            <Link to="/" className={styles.logo}>
-                <h1>Womchat:</h1>
-                <div className={styles.logoBg}>
-                    <img src="/womchat.svg" />
-                </div>
-            </Link>
             <form onSubmit={submit}>
                 <h2>{registering ? "Реєстрація" : "Вхід"}</h2>
                 <div className={styles.formFields}>
