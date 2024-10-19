@@ -6,6 +6,6 @@ export default function NotFound() {
     return <Main>
         <PageHeader>404</PageHeader>
         <p>{"Ой! Сторінку не знайдено :<"}</p>
-        <Button to="/">На головну</Button>
+        <Button to="/" primary>На головну</Button>
     </Main>;
 }

@@ -1,52 +1,47 @@
 .auth {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     height: 100%;
     width: 100%;
-    justify-content: end;
-    padding: 40px 44px;
-
-    h1 {
-        font-size: 96px;
-        text-transform: uppercase;
-        margin: 0;
-    }
+    
+    padding: 1%;
 
     form {
         display: flex;
         flex-direction: column;
         align-items: center;
-        align-self: end;
+        align-self: center;
 
-        padding: 8px 28px 56px 290px;
         width: fit-content;
-        background-color: var(--color-2);
-
-        background: var(--color-primary);
-
-        h2 {
-            font-size: 48px;
-            align-self: end;
-            margin: 0;
-            margin-bottom: 44px;
-            text-transform: uppercase;
-        }
 
         .formFields {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            justify-content: center;
+            align-items: center;
             width: 100%;
-            gap: 16px;
+            padding-top: 5%;
+            padding-bottom: 5%;            
         }
 
         label {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            flex-direction: column;
+            text-align: left;
+            width: 100%;
+            margin-bottom: 4px;
         }
+        
         input {
-            width: 270px;
+            align-self: center;
+            width: 100%;
+            min-height: 100%;
+            margin-top: 1%;
+            border: 2px solid;
+            border-color: var(--color-dark-gray);
         }
 
         .controls {
@@ -59,9 +54,16 @@
                 width: 100%;
             }
         }
+
+        .link {            
+            background: none;
+            text-align: center;
+            &:hover {
+                outline: none;
+                text-decoration: underline;
+                opacity: 0.8;
+            }
+        } 
     }
 }
 
-.register form {
-    
-}
