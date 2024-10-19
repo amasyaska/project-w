@@ -151,7 +151,7 @@ class PostAPIView(APIView):
                 if CustomUser.objects.filter(id=request.data.get('user_id')).exists():
                     creator = request.data.get('user_id')
                 else:
-                    return Response(data={'error': 'User not found.'}, 
+                    return Response(data={'error': 'Post not found.'}, 
                                     status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response(data={'error': 'Not enough rights.'}, 
@@ -170,7 +170,27 @@ class PostAPIView(APIView):
     
 
     def put(self, request):
-        pass
+        if request.data.get('id'):
+            post = self.get_object(request.data.get('id'))
+            if post is None:
+                return Response(data={'error': 'Post not found.'}, 
+                                        status=status.HTTP_404_NOT_FOUND)
+            
+            if not ((post in request.user.posts.all()) or request.user.is_staff):
+                return Response(data={'error': 'Not enough rights.'}, 
+                                status=status.HTTP_403_FORBIDDEN)
+            
+            serializer = PostSerializer(post, 
+                                    data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(status=status.HTTP_200_OK)
+            return Response(data={"error": serializer.errors}, 
+                            status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            data={'error': 'Bad request: you need to provide post id.'}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 class LoginAPIView(APIView):
