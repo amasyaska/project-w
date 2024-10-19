@@ -45,10 +45,10 @@ export default function Post() {
                 {post && <>
                     <PageHeader>{post.title}</PageHeader>
                     <p>{post.description}</p>
-                    {post.progress && <PostProgress {...post.progress} />}
                 </>
                 }
             </div>
+            {post?.progress && <PostProgress {...post.progress} />}
         </div>
     </Main>;
 }
