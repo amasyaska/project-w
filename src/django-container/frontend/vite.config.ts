@@ -12,6 +12,7 @@ export default defineConfig({
             "@pages": "/src/pages",
             "@utils": "/src/utils",
             "@context": "/src/context",
+            "@dev": "/src/dev",
         },
     },
     // https://github.com/laravel/vite-plugin/issues/28
