@@ -72,18 +72,13 @@ class UserAPIView(APIView):
                 if user is None:
                     return Response(data={'error': 'User not found.'}, 
                                     status=status.HTTP_404_NOT_FOUND)
-                serializer = UserSerializer(request.user, 
-                                            data=request.data, partial=True)
-                if serializer.is_valid():
-                    serializer.save()
-                    return Response(status=status.HTTP_200_OK)
-                return Response(data={"error": serializer.errors}, 
-                                status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response(data={'error': 'Not enough rights.'}, 
                                 status=status.HTTP_403_FORBIDDEN)
+        else:
+            user = request.user
 
-        serializer = UserSerializer(request.user, 
+        serializer = UserSerializer(user, 
                                     data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -172,6 +167,10 @@ class PostAPIView(APIView):
             return Response(status=status.HTTP_201_CREATED)
         return Response(data={'error': serializer.errors}, 
                         status=status.HTTP_400_BAD_REQUEST)
+    
+
+    def put(self, request):
+        pass
 
 
 class LoginAPIView(APIView):
