@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  web_app:
+    build: ./django-container
+    volumes:
+      - ./django-container:/usr/src/app
+    expose:
+      - 8000
+    env_file:
+      - ./django-container/.env
+    depends_on:
+      - db
+
+  nginx_service:
+    build: ./nginx-container
+    ports:
+      - 8080:80
+    depends_on:
+      - web_app
+
+  db:
+    build: ./postgres-container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./postgres-container/.env
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./data/db_data
+      o: bind
