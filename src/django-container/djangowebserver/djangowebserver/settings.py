@@ -91,7 +91,7 @@ DATABASES = {
 }
 
 # DATABASES = {
-#     'default': {
+#     'default': {  
 #         'ENGINE': os.getenv('SQL_ENGINE'),
 #         'NAME': os.getenv('SQL_DATABASE_NAME'),
 #         'USER': os.getenv('SQL_DATABASE_USER'),

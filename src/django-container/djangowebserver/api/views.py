@@ -1,4 +1,8 @@
 from django.shortcuts import render
+<<<<<<< HEAD
+
+# Create your views here.
+=======
 from django.contrib.auth import authenticate, login, logout
 
 from rest_framework.decorators import APIView
@@ -63,3 +67,4 @@ class LogoutAPIView(APIView):
     def post(self, request):
         logout(request)
         return Response(status=status.HTTP_200_OK)
+>>>>>>> dev
