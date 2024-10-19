@@ -9,6 +9,7 @@ import Home from "@pages/Home";
 import Header from "@components/Header.tsx";
 import Footer from "@components/Footer.tsx";
 import Main from "@components/Main.tsx";
+import Post from "@pages/Post.tsx";
 
 export default function App() {
     return (
@@ -21,6 +22,8 @@ export default function App() {
                     <Route path="/login" element={<Auth/>}/>
                     <Route path="/register" element={<Auth registering/>}/>
                     <Route path="/logout" element={<Logout/>}/>
+
+                    <Route path="/post/:postId" element={<Post/>}/>
 
                     <Route path="/wombat" element={<Wombat/>}/>
 

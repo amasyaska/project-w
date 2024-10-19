@@ -1,9 +1,7 @@
 import styles from './PageHeader.module.css';
+import React from "react";
 
-type PageHeaderProps = {
-    text: string;
-};
 
-export default function PageHeader({text}: PageHeaderProps) {
-    return <h2 className={styles.pageHeader}>{text}</h2>;
+export default function PageHeader({children}: { children: React.ReactNode }) {
+    return <h2 className={styles.pageHeader}>{children}</h2>;
 }

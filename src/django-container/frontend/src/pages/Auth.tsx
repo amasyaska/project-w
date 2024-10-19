@@ -57,7 +57,6 @@ export default function Auth({ registering = false }) {
             </Link>
             <form onSubmit={submit}>
                 <h2>{registering ? "Реєстрація" : "Вхід"}</h2>
-                {/* <img src="lock.svg" alt="" className={styles.lock} /> */}
                 <div className={styles.formFields}>
                     <Input
                         label="Логін"
