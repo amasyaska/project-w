@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-from .models import CustomUser, Post, UserRole, PostType
+from .models import CustomUser, Post, UserRole, PostType, Achievement, UserToAchievement
 
 
 # VALIDATORS
@@ -25,6 +25,11 @@ class UserRoleField(serializers.Field):
         return UserRole(name=data)
 
 # SERIALIZERS
+class AchievementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Achievement
+        fields = '__all__'
+
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -44,17 +49,23 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     role = UserRoleField(
-        required=True,
+        required=False,
     )
 
+    achievements = serializers.SlugRelatedField(slug_field='name',
+                                                required=False,
+                                                many=True,
+                                                queryset=Achievement.objects.all())
     class Meta:
         model = CustomUser
-        fields = ['id', 'password', 'username', 'email', 'role']
+        fields = ['id', 'password', 'username', 'email', 'role', 'achievements']
 
     
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)
         instance.email = validated_data.get('email', instance.email)
+        for achievement in validated_data.get('achievements'):
+            UserToAchievement.objects.create(user=instance, achievement=achievement)
         instance.save()
         return instance
 

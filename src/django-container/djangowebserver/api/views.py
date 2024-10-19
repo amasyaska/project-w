@@ -66,9 +66,10 @@ class UserAPIView(APIView):
 
     
     def put(self, request):
-        if request.data.get('id'):
+        data = request.data
+        if data.get('id'):
             if request.user.is_staff:
-                user = self.get_object(request.data.get('id'))
+                user = self.get_object(data.get('id'))
                 if user is None:
                     return Response(data={'error': 'User not found.'}, 
                                     status=status.HTTP_404_NOT_FOUND)
@@ -78,8 +79,12 @@ class UserAPIView(APIView):
         else:
             user = request.user
 
+        if data.get('achievements') and (not request.user.is_staff):
+            return Response(data={'error': 'Not enough rights.'}, 
+                                status=status.HTTP_403_FORBIDDEN)
+
         serializer = UserSerializer(user, 
-                                    data=request.data, partial=True)
+                                    data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_200_OK)
