@@ -3,7 +3,7 @@ import axios from "axios";
 
 type loginParams = { username: string; password: string };
 type registerParams = { email: string; username: string; password: string };
-type getMessagesParams = { chatId: number | string };
+type getMessagesParams = { postId: number | string };
 
 type BaseData = {
     error?: string;
@@ -15,18 +15,10 @@ type User = {
     email: string;
 };
 
-export type Message = {
+export type Post = {
     id: number;
-    text: string;
-    username: string;
-    timestamp: string;
-    isOwn: boolean;
-};
-
-export type Chat = {
-    id: number;
-    name: string;
-    lastMessage: string;
+    title: string;
+    description: string;
 };
 
 const defaultContext = {
@@ -36,9 +28,8 @@ const defaultContext = {
     register: async (_params: registerParams) => ({} as BaseData),
     getUser: async () => ({} as BaseData),
 
-    getChats: async () => ({} as BaseData & { chats?: Chat[] }),
-    getMessages: async (_params: getMessagesParams) => ({} as BaseData & { messages?: Message[] }),
-    sendMessage: async (_params: { chatId: number | string; text: string }) => ({} as BaseData & Message),
+    getPosts: async () => ({} as BaseData & { posts?: Post[] }),
+    getPost: async (_params: getMessagesParams) => ({} as BaseData & { post?: Post }),
 };
 
 // context for managing authentication state
@@ -46,7 +37,7 @@ export const AuthContext = createContext(defaultContext);
 
 // create a new axios client for making requests to the API
 const client = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: "http://127.0.0.1:8000/api/",
     withCredentials: true,
     xsrfCookieName: "csrftoken",
     xsrfHeaderName: "X-CSRFTOKEN",
@@ -71,7 +62,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
         () => ({
             user,
             login: async (params: loginParams) => {
-                const response = await client.post("/login/", params);
+                const response = await client.post("login/", params);
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -80,7 +71,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             logout: async () => {
-                const response = await client.post("/logout/");
+                const response = await client.post("logout/");
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -89,7 +80,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             register: async (params: registerParams) => {
-                const response = await client.post("/registration/", params);
+                const response = await client.post("register/", params);
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -98,7 +89,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             getUser: async () => {
-                const response = await client.get("/api/user/");
+                const response = await client.get("user/");
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -107,24 +98,22 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
 
-            getChats: async () => {
-                const response = await client.get("/chats/");
+            getPosts: async () => {
+                const response = await client.get("posts/");
                 if (response.status !== 200) {
                     return {};
                 }
                 return response.data;
             },
-            getMessages: async (params: getMessagesParams) => {
-                const chatId = Number(params.chatId);
-                const response = await client.get(`/chats/${chatId}/`);
-                if (response.status !== 200) {
-                    return {};
-                }
-                return response.data;
-            },
-            sendMessage: async (params: { chatId: number | string; text: string }) => {
-                const chatId = Number(params.chatId);
-                const response = await client.post(`/chats/${chatId}/`, params);
+            getPost: async (params: getMessagesParams) => {
+                return {
+                    post: {
+                        title: "Збір на FPV для 3 ОЩБ",
+                        description: "Збір коштів на 100 FPV",
+                    }
+                };
+                const postId = Number(params.postId);
+                const response = await client.get(`post/${postId}/`);
                 if (response.status !== 200) {
                     return {};
                 }

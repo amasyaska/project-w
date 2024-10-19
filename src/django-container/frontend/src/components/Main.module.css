@@ -20,3 +20,8 @@
     background-color: var(--color-white);
     border-radius: var(--border-radius-1);
 }
+
+.big {
+    min-width: 80%;
+    min-height: 80%;
+}
