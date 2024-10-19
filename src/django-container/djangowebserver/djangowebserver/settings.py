@@ -63,7 +63,7 @@ ROOT_URLCONF = 'djangowebserver.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'default' / 'templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,7 +91,7 @@ DATABASES = {
 }
 
 # DATABASES = {
-#     'default': {
+#     'default': {  
 #         'ENGINE': os.getenv('SQL_ENGINE'),
 #         'NAME': os.getenv('SQL_DATABASE_NAME'),
 #         'USER': os.getenv('SQL_DATABASE_USER'),
@@ -151,6 +151,7 @@ AUTH_USER_MODEL = 'api.CustomUser'
 
 REST_FRAMEWORK = { 
     'DEFAULT_AUTHENTICATION_CLASSES': [ 
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication', 
     ] 
 }

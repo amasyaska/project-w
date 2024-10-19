@@ -1,0 +1,22 @@
+.input {
+    padding: 10px;
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
+
+    font-size: var(--font-size-text);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    border: 3px;
+    border-radius: var(--border-radius-2);
+    border-color: var(--color-dark-gray);
+
+    &::placeholder {
+        color: var(--color-dark-gray);
+    }
+}
+
+.label {
+    text-transform: uppercase;
+}
