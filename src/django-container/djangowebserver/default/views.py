@@ -5,4 +5,4 @@ from django.views import View
 class RegistrationView(View):
 
     def get(self, request):
-        return render(request, 'registration.html')
+        return render(request, 'index.html')

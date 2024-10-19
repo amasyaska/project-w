@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useAuth from "@hooks/auth";
 
 import Button from "@components/Button";
