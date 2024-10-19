@@ -8,14 +8,12 @@ import Logout from "@pages/Logout";
 import Home from "@pages/Home";
 import Header from "@components/Header.tsx";
 import Footer from "@components/Footer.tsx";
-import Main from "@components/Main.tsx";
 import Post from "@pages/Post.tsx";
 
 export default function App() {
     return (
         <BrowserRouter>
             <Header/>
-            <Main>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
 
@@ -29,7 +27,6 @@ export default function App() {
 
                     <Route path="/*" element={<NotFound/>}/>
                 </Routes>
-            </Main>
             <Footer/>
         </BrowserRouter>
     );

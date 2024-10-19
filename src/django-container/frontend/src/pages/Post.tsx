@@ -3,10 +3,10 @@ import PostProgress, {PostProgressProps} from "@components/PostProgress.tsx";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-
 import styles from './Post.module.css';
+import Loading from "@components/Loading.tsx";
+import useAuth from "@hooks/auth.ts";
+import Main from "@components/Main.tsx";
 
 type PostProps = {
     title: string;
@@ -15,31 +15,40 @@ type PostProps = {
 };
 
 export default function Post() {
-    const {postId} = useParams();
+    const {postId} = useParams() as { postId: string };
+    const {getPost} = useAuth()
 
     const [post, setPost] = useState<PostProps | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // TODO: Fetch the post from the backend
+        getPost({postId}).then((response) => {
+            if (response.error) {
+                setError(response.error);
+            } else {
+                if (response.post === undefined) {
+                    setError("Post not found");
+                } else {
+                    setPost(response.post);
+                }
+            }
+            setLoading(false);
+        });
     });
 
-    return <div className={styles.postOuter}>
-        <PageHeader>Post</PageHeader>
-
-        <div className={styles.postInner}>
-            {loading &&
-                <FontAwesomeIcon icon={faSpinner} spin/>
-            }
-            {error && <div>Error: {error}</div>}
-            {post && <>
-
-                <PageHeader>{post.title}</PageHeader>
-                <p>{post.description}</p>
-            {post.progress && <PostProgress {...post.progress} />}
-            </>
-            }
+    return <Main big>
+        <div className={styles.postOuter}>
+            <div className={styles.postInner}>
+                {loading && <Loading/>}
+                {error && <div>Error: {error}</div>}
+                {post && <>
+                    <PageHeader>{post.title}</PageHeader>
+                    <p>{post.description}</p>
+                    {post.progress && <PostProgress {...post.progress} />}
+                </>
+                }
+            </div>
         </div>
-    </div>;
+    </Main>;
 }
