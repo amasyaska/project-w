@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-from .models import CustomUser, Post, UserRole
+from .models import CustomUser, Post, UserRole, PostType
 
 
 # VALIDATORS
@@ -66,7 +66,17 @@ class UserSerializer(serializers.ModelSerializer):
         return user
     
 
+class PostTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostType
+        fields = '__all__'
+    
+
 class PostSerializer(serializers.ModelSerializer):
+    post_type = serializers.SlugRelatedField(slug_field='name',
+                                            required=False, 
+                                            queryset=PostType.objects.all())
+
     class Meta:
         model = Post
         fields = '__all__'
@@ -79,6 +89,11 @@ class PostSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
+
+    def create(self, validated_data):
+        post = Post.objects.create(**validated_data)
+        return post
+
 
 class LoginSerializer(serializers.Serializer):
 

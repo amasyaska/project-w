@@ -4,8 +4,13 @@ from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
-from .serializers import UserSerializer, LoginSerializer, PostSerializer
-from .models import CustomUser, Post
+from .serializers import (
+    UserSerializer, 
+    LoginSerializer, 
+    PostSerializer, 
+    PostTypeSerializer
+)
+from .models import CustomUser, Post, PostType
 from .permissions import IsNotAuthenticated
 
 # Create your views here.
@@ -85,7 +90,7 @@ class UserAPIView(APIView):
             return Response(status=status.HTTP_200_OK)
         return Response(data={"error": serializer.errors}, 
                         status=status.HTTP_400_BAD_REQUEST)
-            
+
 
     def delete(self, request):
         if request.data.get('id'):
@@ -135,6 +140,38 @@ class PostAPIView(APIView):
             data={'error': 'Bad request: you need to provide post id.'}, 
             status=status.HTTP_400_BAD_REQUEST
         )
+    
+
+    def post(self, request):
+        data = request.data
+        if request.data.get('post_type'):              
+            if PostType.objects.filter(name=request.data.get('post_type')).exists():
+                data['post_type'] = request.data.get('post_type')
+            else:
+                return Response(data={'error': 'Incorrect post type.'}, 
+                                status=status.HTTP_400_BAD_REQUEST)
+
+        if request.data.get('user_id'):
+            if request.user.is_staff:
+                if CustomUser.objects.filter(id=request.data.get('user_id')).exists():
+                    creator = request.data.get('user_id')
+                else:
+                    return Response(data={'error': 'User not found.'}, 
+                                    status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(data={'error': 'Not enough rights.'}, 
+                                status=status.HTTP_403_FORBIDDEN)
+        else:
+            creator = request.user.id
+        data['creator'] = creator
+        
+        serializer = PostSerializer(data=data)
+        if serializer.is_valid():
+            post = serializer.create(serializer.validated_data)
+            post.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(data={'error': serializer.errors}, 
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginAPIView(APIView):
