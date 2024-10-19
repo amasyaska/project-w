@@ -192,6 +192,26 @@ class PostAPIView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+    
+    def delete(self, request):
+        if request.data.get('id'):
+            post = self.get_object(request.data.get('id'))
+            if post is None:
+                return Response(data={'error': 'Post not found.'}, 
+                                        status=status.HTTP_404_NOT_FOUND)
+            
+            if not ((post in request.user.posts.all()) or request.user.is_staff):
+                return Response(data={'error': 'Not enough rights.'}, 
+                                status=status.HTTP_403_FORBIDDEN)
+            
+            post.delete()
+            return Response(status=status.HTTP_200_OK)
+        return Response(
+            data={'error': 'Bad request: you need to provide post id.'}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
+        
+
 
 class LoginAPIView(APIView):
 
@@ -201,7 +221,6 @@ class LoginAPIView(APIView):
             user = authenticate(request=request, username=serializer.validated_data['username'], 
                                 password=serializer.validated_data['password'])
             if (user is None):
-                user.set
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
             login(request=request, user=user)
             return Response(status=status.HTTP_200_OK)
