@@ -1,9 +1,12 @@
 from django.urls import path
-from .views import UserAPIView
+from .views import UserAPIView, LoginAPIView, LogoutAPIView
 
 app_name = 'api'
 
 urlpatterns = [
-    path("user/", UserAPIView.as_view(http_method_names=['post'])),
-    path("user/<int:pk>/", UserAPIView.as_view(http_method_names=['get', 'put', 'delete'])),
+    path("user", UserAPIView.as_view(http_method_names=['post', 'options'])),
+    path("user/<int:pk>", UserAPIView.as_view(http_method_names=['get', 'put', 'delete'])),
+
+    path('login', LoginAPIView.as_view(http_method_names=['post', 'options'])),
+    path('logout', LogoutAPIView.as_view(http_method_names=['post', 'options'])),
 ]
