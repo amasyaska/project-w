@@ -54,6 +54,8 @@ class UserAPIView(APIView):
         if (serializer.is_valid(raise_exception=True)):
             user = serializer.create(serializer.validated_data)
             if (user is not None):
+                user.set_password(serializer.validated_data['password'])
+                user.save()
                 return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -108,8 +110,10 @@ class LoginAPIView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
-            user = authenticate(request=request, username=serializer.data['username'], password=serializer.data['password'])
+            user = authenticate(request=request, username=serializer.validated_data['username'], 
+                                password=serializer.validated_data['password'])
             if (user is None):
+                user.set
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
             login(request=request, user=user)
             return Response(status=status.HTTP_200_OK)
