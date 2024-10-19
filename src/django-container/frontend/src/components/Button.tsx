@@ -1,17 +1,14 @@
 import style from "./Button.module.css";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import React from "react";
 
-export default function Button({
-    children,
-    to,
-    primary,
-    ...props
-}: Readonly<{
-    children?: React.ReactNode;
+type ButtonProps = {
+    children: React.ReactNode;
     to?: string;
     primary?: boolean;
-    [key: string]: any;
-}>) {
+} & React.ButtonHTMLAttributes<HTMLButtonElement> & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+export default function Button({children, to, primary, ...props}: ButtonProps) {
     const className = [style.button, primary ? style.primary : "", props.className].join(" ").trim();
     return to ? (
         <Link to={to} {...props} className={className}>

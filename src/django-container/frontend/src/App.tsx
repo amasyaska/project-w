@@ -1,25 +1,33 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import "./App.css";
 
-// import Home from "@pages/Home";
 import Auth from "@pages/Auth";
-import Chat from "@pages/chat/Chat";
 import NotFound from "@pages/NotFound";
 import Wombat from "@pages/Wombat";
 import Logout from "@pages/Logout";
+import Home from "@pages/Home";
+import Header from "@components/Header.tsx";
+import Footer from "@components/Footer.tsx";
+import Main from "@components/Main.tsx";
 
 export default function App() {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Chat />} />
-                <Route path="/login" element={<Auth />} />
-                <Route path="/register" element={<Auth registering />} />
-                <Route path="/logout" element={<Logout />} />
+            <Header/>
+            <Main>
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
 
-                <Route path="/chat/:chatId" element={<Chat />} />
-                <Route path="/wombat" element={<Wombat />} />
-                <Route path="/*" element={<NotFound />} />
-            </Routes>
+                    <Route path="/login" element={<Auth/>}/>
+                    <Route path="/register" element={<Auth registering/>}/>
+                    <Route path="/logout" element={<Logout/>}/>
+
+                    <Route path="/wombat" element={<Wombat/>}/>
+
+                    <Route path="/*" element={<NotFound/>}/>
+                </Routes>
+            </Main>
+            <Footer/>
         </BrowserRouter>
     );
 }

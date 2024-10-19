@@ -1,8 +1,8 @@
 .button {
     display: inline-block;
     padding: 12px 22px;
-    background-color: var(--color-3);
-    color: var(--color-1);
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
 
     font-size: var(--font-size-text);
     text-align: center;
@@ -10,20 +10,22 @@
     text-decoration: none;
 
     cursor: pointer;
-    border: none;
+    border: 3px solid;
     border-radius: var(--border-radius-2);
-    box-shadow: var(--shadow);
+    border-color: var(--color-dark-gray);
 
     transition: opacity var(--transition);
 
     &:hover {
         opacity: 0.8;
     }
+
     &:active {
         opacity: 0.6;
     }
 
     &.primary {
-        background-color: var(--color-primary);
+        background-color: var(--color-dark-gray);
+        color: var(--color-white);
     }
 }

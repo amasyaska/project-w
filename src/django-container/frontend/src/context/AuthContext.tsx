@@ -1,4 +1,4 @@
-import { createContext, useState, useMemo, useEffect } from "react";
+import React, {createContext, useMemo, useState} from "react";
 import axios from "axios";
 
 type loginParams = { username: string; password: string };
@@ -56,7 +56,7 @@ const client = axios.create({
 });
 
 // provider component that wraps the entire application
-export function AuthProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>) {
     const [user, setUser] = useState(null);
 
     // fetch the current user when the component mounts

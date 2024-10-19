@@ -1,16 +1,18 @@
 import style from "./Input.module.css";
+import React from "react";
 
-export default function Input({
-    label,
-    ...props
-}: Readonly<{ label?: string } & React.InputHTMLAttributes<HTMLInputElement>>) {
+type InputProps = {
+    label?: string;
+} & React.InputHTMLAttributes<HTMLInputElement>;
+
+export default function Input({label, ...props}: InputProps) {
     const className = [style.input, props.className].join(" ");
     return label ? (
         <label className={style.label}>
             {label}
-            <input {...props} className={className} />
+            <input {...props} className={className}/>
         </label>
     ) : (
-        <input {...props} className={className} />
+        <input {...props} className={className}/>
     );
 }
