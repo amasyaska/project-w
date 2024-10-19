@@ -25,7 +25,7 @@ by Wombats, Inc.
 5. ```docker compose build```
 6. ```docker compose up -d```
 7. go to ```localhost:8080```
-# endpoint
+# endpoints
 \* – required field
 - /api/user
    - GET | get user info
@@ -45,6 +45,13 @@ by Wombats, Inc.
       - JSON: {title*, content*, post_type*}
    - DELETE | deletes user
       - JSON {id*}
+- /api/login
+   - POST | login user
+      - JSON: {username*, password*}
+- /api/logout
+   - POST | logout user
+      - JSON: {}
+
 # frontend
 React
 # backend
