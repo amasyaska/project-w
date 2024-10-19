@@ -4,6 +4,8 @@ import useAuth from "@hooks/auth";
 
 import Button from "@components/Button";
 import Input from "@components/Input";
+import PageHeader from "@components/PageHeader.tsx";
+import Main from "@components/Main";   
 
 import styles from "./Auth.module.css";
 
@@ -48,41 +50,39 @@ export default function Auth({ registering = false }) {
     }
 
     return (
+        <Main>
         <div className={[styles.auth, registering ? styles.register : ""].join(" ")}>
             <form onSubmit={submit}>
-                <h2>{registering ? "Реєстрація" : "Вхід"}</h2>
+                <PageHeader>{registering ? "Реєстрація" : "Вхід у обліковий запис"}</PageHeader>
                 <div className={styles.formFields}>
                     <Input
-                        label="Логін"
+                        label="Ім'я користувача"
                         type="text"
                         name="name"
                         required
-                        {...(registering ? { placeholder: "Літери, цифри, та підкреслення" } : {})}
                     />
 
-                    {registering && <Input label="E-mail" type="text" name="email" placeholder="[Опціонально]" />}
+                    {registering && <Input label="Електронна пошта" type="text" name="email"/>}
 
                     <Input
                         label="Пароль"
                         type="password"
                         name="password"
                         required
-                        {...(registering ? { placeholder: "12+ знаків" } : {})}
                     />
 
-                    {registering && (
-                        <Input label="і ще раз" type="password" name="password2" required placeholder="Повтор паролю" />
-                    )}
+                    {registering && <Input label="Підтвердження паролю" type="password" name="password2"/>}
                 </div>
                 <div className={styles.controls}>
-                    <Button to={registering ? "/login" : "/register"}>
-                        {registering ? "Увійти" : "Зареєструватись"}
-                    </Button>
+                    <Link to={registering ? "/login" : "/register"} className={styles.link}>
+                        {registering ? "Вже зареєстровані? Зайдіть у обліковий запис" : "Немає облікового запису? Зареєструйтеся"}
+                    </Link>
                     <Button type="submit" primary>
                         {registering ? "Зареєструватись" : "Увійти"}
                     </Button>
                 </div>
             </form>
         </div>
+        </Main>
     );
 }
