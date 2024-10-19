@@ -4,11 +4,11 @@ import {useParams} from "react-router-dom";
 import PageHeader from "@components/PageHeader.tsx";
 import PostProgress, {PostProgressProps} from "@components/PostProgress.tsx";
 import Loading from "@components/Loading.tsx";
-import useAuth from "@hooks/auth.ts";
 import Main from "@components/Main.tsx";
 import Button from "@components/Button.tsx";
 
 import styles from './Post.module.css';
+import useTestAuth from "@dev/Auth.ts";
 
 type PostProps = {
     title: string;
@@ -18,7 +18,7 @@ type PostProps = {
 
 export default function Post() {
     const {postId} = useParams() as { postId: string };
-    const {getPost} = useAuth()
+    const {getPost} = useTestAuth();
 
     const [post, setPost] = useState<PostProps | null>(null);
     const [loading, setLoading] = useState(true);
@@ -42,8 +42,8 @@ export default function Post() {
     return <Main big>
         <div className={styles.postOuter}>
             <div className={styles.postInner}>
-                {loading && <Loading/>}
-                {error && <div>Error: {error}</div>}
+                {loading && <Loading text="Почекайте, сторінка завантажується"/>}
+                {error && <div>Сталася помилка: {error}</div>}
                 {post && <>
                     <Button back>Назад</Button>
                     <PageHeader>{post.title}</PageHeader>
