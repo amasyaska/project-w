@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import {faUserCircle,faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 
 import styles from "./Header.module.css";
 
@@ -34,9 +34,12 @@ export default function Header() {
             {splash}
         </div>
         <div className={styles.right}>
+            <Link to={"/creation"} className={styles.createButton}>
+                <FontAwesomeIcon icon={faPlusCircle}/>
+            </Link>
             <Link to={"/profile"} className={styles.account}>
                 <FontAwesomeIcon icon={faUserCircle}/>
-            </Link>
+            </Link>          
         </div>
     </header>;
 }
