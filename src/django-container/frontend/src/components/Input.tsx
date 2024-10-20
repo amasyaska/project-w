@@ -1,11 +1,10 @@
 import style from "./Input.module.css";
-import React from "react";
 
 type InputProps = {
     label?: string;
-    text?:boolean;
-    className?:string;
-    [key:string]: unknown;
+    text?: boolean;
+    className?: string;
+    [key: string]: unknown;
 };
 
 export default function Input({label, text, ...props}: InputProps) {
@@ -16,7 +15,5 @@ export default function Input({label, text, ...props}: InputProps) {
             {label}
             {inp}
         </label>
-    ) : (
-        inp
-    );
+    ) : inp;
 }
