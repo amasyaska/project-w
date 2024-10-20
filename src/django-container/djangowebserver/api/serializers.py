@@ -96,6 +96,7 @@ class PostSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.content = validated_data.get('content', instance.content)
         instance.post_type = validated_data.get('post_type', instance.post_type)
+        instance.tags = validated_data.get('tags', instance.tags)
         instance.save()
         return instance
     

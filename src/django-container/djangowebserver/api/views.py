@@ -1,15 +1,17 @@
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+from django.contrib.postgres.search import TrigramSimilarity
+from django.db.models.functions import Greatest
 from django.contrib.auth import authenticate, login, logout
-from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from .serializers import (
     UserSerializer, 
     LoginSerializer, 
-    PostSerializer, 
-    PostTypeSerializer
+    PostSerializer
 )
+import json
 from .models import CustomUser, Post, PostType
 from .permissions import IsNotAuthenticated
 
@@ -215,7 +217,29 @@ class PostAPIView(APIView):
             data={'error': 'Bad request: you need to provide post id.'}, 
             status=status.HTTP_400_BAD_REQUEST
         )
-        
+
+
+class PostViewSet(ModelViewSet):
+
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+    def get_queryset(self):
+        queryset = self.queryset
+
+        search_text = self.request.POST.get('search')
+        if search_text:
+            queryset = Post.objects.annotate(
+                similarity=Greatest(
+                    TrigramSimilarity('title', search_text), 
+                    TrigramSimilarity('content', search_text)
+                )).filter(similarity__gt=0.2).order_by('-similarity')
+            
+        tags_list = json.decoder.JSONDecoder().decode(self.request.POST.get('tags', ''))
+        if tags_list:
+            queryset = queryset.filter(
+                tags__contained_by=tags_list).exclude(tags=[])
+        return queryset
 
 
 class LoginAPIView(APIView):

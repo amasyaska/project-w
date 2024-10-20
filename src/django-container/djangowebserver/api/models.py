@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class Achievement(models.Model):
@@ -45,6 +46,8 @@ class Post(models.Model):
     post_type = models.ForeignKey(PostType, null=True, 
                                 on_delete=models.SET_NULL, 
                                 related_name='posts')
+    tags = ArrayField(base_field=models.CharField(max_length=50), blank=True,
+                    max_length=20, default=list)
     
     def __str__(self):
         return self.title
