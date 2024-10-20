@@ -9,7 +9,7 @@
     text-decoration: none;
 
     cursor: pointer;
-    border: none;
+    border: 2px solid var(--color-dark-gray);
     border-radius: var(--border-radius-2);
 
     transition: opacity var(--transition);
@@ -26,6 +26,7 @@
         background-color: var(--color-primary);
         color: var(--color-white);
         font-size: 1.4vw;
+        border: none;
     }
 
     &.uppercase {
