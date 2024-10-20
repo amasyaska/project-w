@@ -1,9 +1,10 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUserCircle,faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import {faUserCircle} from '@fortawesome/free-solid-svg-icons'
 
 import styles from "./Header.module.css";
+import useAuth from "@hooks/auth.ts";
 
 // Мотивашки для користувачів
 const SPLASHES = [
@@ -22,6 +23,7 @@ function getRandomSplash() {
 }
 
 export default function Header() {
+    const {user} = useAuth();
     const [splash] = useState(getRandomSplash);
 
     return <header className={styles.header}>
@@ -39,9 +41,6 @@ export default function Header() {
             {splash}
         </div>
         <div className={styles.right}>
-            <Link to={"/creation"} className={styles.createButton}>
-                <FontAwesomeIcon icon={faPlusCircle}/>
-            </Link>
             <Link to={"/profile"} className={styles.account}>
                 <FontAwesomeIcon icon={faUserCircle}/>
             </Link>          

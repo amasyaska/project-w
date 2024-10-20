@@ -5,4 +5,11 @@
     width: 100%;
 
     gap: 8px;
+
+    .searchbar {
+        width: 100%;
+        border: 2px solid;
+        border-color: var(--color-dark-gray);
+    }
 }
+

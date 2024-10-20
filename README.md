@@ -45,6 +45,9 @@ by Wombats, Inc.
       - JSON: {title*, content*, post_type*}
    - DELETE | deletes user
       - JSON {id*}
+- /api/posts
+   - GET | get info about all posts by tags and request text
+      - JSON {search, tags}
 - /api/login
    - POST | login user
       - JSON: {username*, password*}
