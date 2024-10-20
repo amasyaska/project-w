@@ -1,9 +1,10 @@
 import React, {createContext, useMemo, useState} from "react";
 import axios from "axios";
 
-type loginParams = { username: string; password: string };
-type registerParams = { email: string; username: string; password: string };
-type getMessagesParams = { postId: number | string };
+type LoginParams = { username: string; password: string };
+type RegisterParams = { email: string; username: string; password: string };
+type GetPostsParams = { search?: string };
+type GetPostParams = { postId: number | string };
 
 type BaseData = {
     error?: string;
@@ -19,18 +20,18 @@ export type Post = {
     id: number;
     title: string;
     description: string;
-    tags?: string;
+    tags?: string[];
 };
 
 const defaultContext = {
     user: null as User | null,
-    login: async (_params: loginParams) => ({} as BaseData),
+    login: async (_params: LoginParams) => ({} as BaseData),
     logout: async () => ({} as BaseData),
-    register: async (_params: registerParams) => ({} as BaseData),
+    register: async (_params: RegisterParams) => ({} as BaseData),
     getUser: async () => ({} as BaseData),
 
-    getPosts: async () => ({} as BaseData & { posts: Post[] }),
-    getPost: async (_params: getMessagesParams) => ({} as BaseData & { post?: Post }),
+    getPosts: async (_params: GetPostsParams) => ({} as BaseData & { posts: Post[] }),
+    getPost: async (_params: GetPostParams) => ({} as BaseData & { post?: Post }),
 
     createPost: async (_params: Post) => ({} as BaseData & { postId: number }),
 };
@@ -64,7 +65,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
     const value = useMemo(
         () => ({
             user,
-            login: async (params: loginParams) => {
+            login: async (params: LoginParams) => {
                 const response = await client.post("login", params);
                 console.log(response);
                 if (response.status !== 200) {
@@ -74,7 +75,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             logout: async () => {
-                const response = await client.post("logout");
+                const response = await client.post("logout/");
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -82,7 +83,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 setUser(null);
                 return {};
             },
-            register: async (params: registerParams) => {
+            register: async (params: RegisterParams) => {
                 const response = await client.post("user", params);
                 console.log(response);
                 if (response.status !== 200) {
@@ -101,14 +102,14 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
 
-            getPosts: async () => {
-                const response = await client.get("posts");
+            getPosts: async (params: GetPostsParams) => {
+                const response = await client.post("posts", params);
                 if (response.status !== 200) {
                     return {};
                 }
                 return response.data;
             },
-            getPost: async (params: getMessagesParams) => {
+            getPost: async (params: GetPostParams) => {
                 const postId = Number(params.postId);
                 const response = await client.get(`post/${postId}`);
                 if (response.status !== 200) {

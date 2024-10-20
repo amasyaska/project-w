@@ -25,7 +25,8 @@ export default function Creation() {
         // get form values
         const title = data.get("title") as string;
         const description = data.get("description") as string;
-        const tags = data.get("tags") as string;
+        const tags = (data.get("tags") as string).split(" ")
+            .filter((tag) => tag.length > 0);
 
         createPost({title, description, tags} as Post).then(({postId}) => {
             navigate(`/post/${postId}`);

@@ -4,9 +4,9 @@ import useAuth from "@hooks/auth.ts";
 
 import PostEntry from "@components/posts/PostEntry.tsx";
 
-import style from './PostsList.module.css';
+import styles from './PostsList.module.css';
 
-export default function PostsList({limit}: { limit?: number }) {
+export default function PostsList({limit, search}: { limit?: number, search?: string }) {
     const {getPosts} = useAuth();
 
     const [posts, setPosts] = useState<Post[] | null>(null);
@@ -14,7 +14,7 @@ export default function PostsList({limit}: { limit?: number }) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        getPosts().then((response) => {
+        getPosts({search}).then((response) => {
             if (response.error) {
                 setError(response.error);
             } else {
@@ -23,12 +23,12 @@ export default function PostsList({limit}: { limit?: number }) {
             }
             setLoading(false);
         });
-    }, [getPosts, limit]);
+    }, [getPosts, limit, search]);
 
-    return <div className={style.outer}>
+    return <div className={styles.outer}>
         {loading && <div>Loading...</div>}
         {error && <div>Error: {error}</div>}
-        {posts && <div className={style.list}>
+        {posts && <div className={styles.list}>
             {posts.map((post) => <PostEntry post={post} key={post.id}/>)}
         </div>}
         {posts && posts.length === 0 && <div>Список постів порожній</div>}
