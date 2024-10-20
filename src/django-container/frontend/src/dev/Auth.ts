@@ -41,7 +41,13 @@ async function getPost({postId}: { postId: string }) {
 
 export default function useTestAuth() {
     return {
+        user: null,
+        login: async () => ({}),
+        logout: async () => ({}),
+        register: async () => ({}),
+        getUser: async () => ({}),
         getPosts,
         getPost,
+        createPost: async () => ({postId: 0}),
     };
 }

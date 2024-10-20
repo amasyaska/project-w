@@ -1,0 +1,45 @@
+.creation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.creationFields {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 5%;
+    padding-bottom: 5%; 
+
+    label {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: 100%;
+        margin-bottom: 4px;
+    }
+    
+    input, textarea {
+        align-self: center;
+        width: 100%;
+        min-height: 100%;
+        margin-top: 1%;
+        border: 2px solid;
+        border-color: var(--color-dark-gray);        
+    }
+    
+    .description {
+        min-height: 20vh;
+        
+    }
+    
+}
+
+.create {
+    
+}

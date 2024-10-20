@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
+import useAuth from "@hooks/auth.ts";
 
 import PageHeader from "@components/PageHeader.tsx";
 import PostProgress, {PostProgressProps} from "@components/PostProgress.tsx";
@@ -8,7 +9,6 @@ import Main from "@components/Main.tsx";
 import Button from "@components/Button.tsx";
 
 import styles from './Post.module.css';
-import useTestAuth from "@dev/Auth.ts";
 
 type PostProps = {
     title: string;
@@ -18,7 +18,7 @@ type PostProps = {
 
 export default function Post() {
     const {postId} = useParams() as { postId: string };
-    const {getPost} = useTestAuth();
+    const {getPost} = useAuth();
 
     const [post, setPost] = useState<PostProps | null>(null);
     const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ export default function Post() {
             }
             setLoading(false);
         });
-    });
+    }, [getPost, postId]);
 
     return <Main big>
         <div className={styles.postOuter}>

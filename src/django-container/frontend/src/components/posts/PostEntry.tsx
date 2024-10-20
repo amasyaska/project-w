@@ -7,7 +7,7 @@ import PageHeader from "@components/PageHeader.tsx";
 export default function PostEntry({post}: { post: Post }) {
     return (
         <Link className={styles.postEntry} to={`/post/${post.id}`}>
-            <PageHeader>{post.title}</PageHeader>
+            <PageHeader size={"h3"}>{post.title}</PageHeader>
         </Link>
     );
 }
