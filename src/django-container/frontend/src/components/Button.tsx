@@ -9,6 +9,7 @@ type ButtonProps = {
 
     to?: string;
     back?: boolean;
+    [key: string]: unknown;
 };
 
 /**

@@ -37,7 +37,7 @@ export const AuthContext = createContext(defaultContext);
 
 // create a new axios client for making requests to the API
 const client = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/",
+    baseURL: "http://127.0.0.1:8080/api/",
     withCredentials: true,
     xsrfCookieName: "csrftoken",
     xsrfHeaderName: "X-CSRFTOKEN",

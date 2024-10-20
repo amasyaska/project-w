@@ -1,13 +1,15 @@
-import style from './PostsList.module.css';
 import {useEffect, useState} from "react";
-import PostEntry from "@components/posts/PostEntry.tsx";
 import {Post} from "@context/AuthContext.tsx";
-import useTestAuth from "@dev/Auth.ts";
+import useAuth from "@hooks/auth.ts";
+
+import PostEntry from "@components/posts/PostEntry.tsx";
 import PostsSearch from "@components/posts/PostsSearch.tsx";
 import PostsFilter from "@components/posts/PostsFilter.tsx";
 
+import style from './PostsList.module.css';
+
 export default function PostsList() {
-    const {getPosts} = useTestAuth()
+    const {getPosts} = useAuth();
 
     const [posts, setPosts] = useState<Post[] | null>(null);
     const [loading, setLoading] = useState(true);
@@ -22,7 +24,7 @@ export default function PostsList() {
             }
             setLoading(false);
         });
-    });
+    }, [getPosts]);
 
     return <div className={style.outer}>
         <div className={style.search}>

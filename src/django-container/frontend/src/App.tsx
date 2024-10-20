@@ -11,6 +11,7 @@ import Posts from "@pages/Posts.tsx";
 
 import Header from "@components/Header.tsx";
 import Footer from "@components/Footer.tsx";
+import Profile from "@pages/Profile.tsx";
 
 export default function App() {
     return (
@@ -22,6 +23,7 @@ export default function App() {
                 <Route path="/login" element={<Auth/>}/>
                 <Route path="/register" element={<Auth registering/>}/>
                 <Route path="/logout" element={<Logout/>}/>
+                <Route path="/profile" element={<Profile/>}/>
 
                 <Route path="/posts" element={<Posts/>}/>
                 <Route path="/post/:postId" element={<Post/>}/>
