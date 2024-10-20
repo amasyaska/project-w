@@ -30,16 +30,13 @@
         min-height: 100%;
         margin-top: 1%;
         border: 2px solid;
-        border-color: var(--color-dark-gray);        
-    }
-    
-    .description {
-        min-height: 20vh;
+        border-color: var(--color-dark-gray);
         
+        .description {
+            min-height: 50vh;           
+        }
     }
-    
 }
-
 .create {
     
 }

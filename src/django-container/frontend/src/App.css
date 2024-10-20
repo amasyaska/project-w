@@ -7,8 +7,10 @@
 
     --color-light-gray: #DBDBDB;
     --color-dark-gray: #525252;
-
+    /*Primary color themes*/
     --color-primary: #527139;
+    --color-primary: #3D694C;
+
     --color-secondary: #B7CAA7;
 
     --border-radius-1: 40px;
@@ -21,7 +23,9 @@
     --font-size-text: 16px;
 
     color-scheme: dark;
+    /*Background gradient themes*/
     background: linear-gradient(#B7CAA7, #B7CAA7, #D3CDAF);
+    background: linear-gradient(#4D7A5D, #B1C2A3); 
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
