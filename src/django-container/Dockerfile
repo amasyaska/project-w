@@ -16,4 +16,6 @@ EXPOSE 8000
 WORKDIR /usr/src/app/djangowebserver
 
 # ENTRYPOINT ["python", "./djangowebserver/manage.py", "runserver", "0.0.0.0:8000"]
-ENTRYPOINT ["gunicorn", "djangowebserver.wsgi:application", "--bind", "0.0.0.0:8000"]
+#ENTRYPOINT ["gunicorn", "djangowebserver.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+CMD ["/bin/bash", "-c", "python manage.py makemigrations;python manage.py migrate;gunicorn djangowebserver.wsgi:application --bind 0.0.0.0:8000"]
