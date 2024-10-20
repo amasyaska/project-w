@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 
 import styles from './PostEntry.module.css';
 import PageHeader from "@components/PageHeader.tsx";
+import PostTag from "@components/posts/PostTag.tsx";
 
 export default function PostEntry({post}: { post: Post }) {
     return (
@@ -11,7 +12,7 @@ export default function PostEntry({post}: { post: Post }) {
             {post.tags && (
                 <div className={styles.tags}>
                     {post.tags.map((tag) => (
-                        <span key={tag} className={styles.tag}>{tag}</span>
+                        <PostTag key={tag}>{tag}</PostTag>
                     ))}
                 </div>
             )}
