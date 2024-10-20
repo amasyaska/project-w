@@ -30,7 +30,7 @@ export default function Header() {
                 <h1>Project W</h1>
             </Link>
         </div>
-        <div>
+        <div className={styles.splash}>
             {splash}
         </div>
         <div className={styles.right}>
