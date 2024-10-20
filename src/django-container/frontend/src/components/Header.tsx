@@ -29,7 +29,7 @@ export default function Header() {
     return <header className={styles.header}>
         <div className={styles.center}>
             <Link to="/">
-                <img src="/logo.svg" alt="logo"/>
+                <img src="/assets/text-logo.svg" alt="logo"/>
             </Link>
         </div>
         <div className={styles.splash}>
