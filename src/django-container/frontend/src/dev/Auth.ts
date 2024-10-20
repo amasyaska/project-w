@@ -12,6 +12,7 @@ const TEST_DATA = {
         '1': {
             title: "Post 1",
             description: "Description 1",
+            tags: ["tag1", "tag2"],
         },
         '2': {
             title: "Post 2",

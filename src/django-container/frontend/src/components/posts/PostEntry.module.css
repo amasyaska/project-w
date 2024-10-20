@@ -17,4 +17,11 @@
     &:hover {
         opacity: 0.8;
     }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
 }
