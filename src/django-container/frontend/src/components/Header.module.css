@@ -28,6 +28,12 @@
         left: 8%;
     }
 
+    .logo {
+        width: 100%;
+        margin-left: -4vw;
+        margin-right: 18.8vw;
+    }
+
     .splash {
         font-size: 1.6vw;
         position: relative;
@@ -47,14 +53,13 @@
 
 @media only screen and (max-width: 820px) {
     .header {
-        h1 {
-            font-size: 28px;
-            top: 1px;
+        .logo {
+            width: 100%;
         }
 
         .splash {
             font-size: 2vw;
-            left: 1.1vw;
+            left: -2vw;
             text-wrap: wrap;
         }
     }  
@@ -62,9 +67,9 @@
 
 @media only screen and (max-width: 500px) {
     .header {
-        h1 {
-            font-size: 20px;
-            top: 3px;
+        .logo {
+            margin-left: -1vw;
+            width: 80%;
         }
 
         .splash {
