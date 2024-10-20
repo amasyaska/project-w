@@ -1,7 +1,4 @@
 .pageHeader {
-    font-size: 36px;
-    font-weight: bold;
-
     /* underline */
 
     &::after {
@@ -18,4 +15,19 @@
         margin-top: 8px;
         background-color: var(--color-dark-gray);
     }
+}
+
+h2.pageHeader {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+h3.pageHeader {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h4.pageHeader {
+    font-size: 18px;
+    font-weight: bold;
 }

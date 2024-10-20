@@ -3,12 +3,10 @@ import {Post} from "@context/AuthContext.tsx";
 import useAuth from "@hooks/auth.ts";
 
 import PostEntry from "@components/posts/PostEntry.tsx";
-import PostsSearch from "@components/posts/PostsSearch.tsx";
-import PostsFilter from "@components/posts/PostsFilter.tsx";
 
 import style from './PostsList.module.css';
 
-export default function PostsList() {
+export default function PostsList({limit}: { limit?: number }) {
     const {getPosts} = useAuth();
 
     const [posts, setPosts] = useState<Post[] | null>(null);
@@ -20,18 +18,14 @@ export default function PostsList() {
             if (response.error) {
                 setError(response.error);
             } else {
-                setPosts(response.posts);
+                const posts = limit ? response.posts.slice(0, limit) : response.posts;
+                setPosts(posts);
             }
             setLoading(false);
         });
-    }, [getPosts]);
+    }, [getPosts, limit]);
 
     return <div className={style.outer}>
-        <div className={style.search}>
-            <PostsSearch/>
-            <PostsFilter/>
-        </div>
-
         {loading && <div>Loading...</div>}
         {error && <div>Error: {error}</div>}
         {posts && <div className={style.list}>
