@@ -22,11 +22,14 @@
         position: relative;
         font-size: 36px;
         font-weight: bold;
+        text-wrap: nowrap;
+        margin-right: 10vw;
         bottom: 5px;
         left: 8%;
     }
 
     .splash {
+        font-size: 2vw;
         position: relative;
         right: 5%;
     }
@@ -34,5 +37,41 @@
     .right {
         position: relative;
         right: 3%;
+        margin-left: 10vw;
     }
+}
+
+@media only screen and (max-width: 820px) {
+    .header {
+        background-color: orange;
+
+        h1 {
+            font-size: 28px;
+            top: 1px;
+        }
+
+        .splash {
+            font-size: 3vw;
+            left: 1.1vw;
+            text-wrap: wrap;
+        }
+    }
+
+    
+}
+
+@media only screen and (max-width: 500px) {
+    .header {
+        background-color: red;
+
+        h1 {
+            font-size: 20px;
+            top: 3px;
+        }
+
+        .splash {
+            font-size: 3vw;
+        }
+    }
+    
 }
