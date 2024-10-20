@@ -11,6 +11,8 @@ import Footer from "@components/Footer.tsx";
 import Post from "@pages/Post.tsx";
 import Profile from "@pages/Profile";
 import Posts from "@pages/Posts";
+import Agreement from "@components/Agreement";
+import Creation from "@components/Creation";
 
 export default function App() {
     return (
@@ -26,6 +28,9 @@ export default function App() {
 
                     <Route path="/posts" element={<Posts/>}/>
                     <Route path="/post/:postId" element={<Post/>}/>
+
+                    <Route path="/dev/agreement" element={<Agreement/>}/>
+                    <Route path="/creation" element={<Creation/>}/>
 
                     <Route path="/wombat" element={<Wombat/>}/>
 

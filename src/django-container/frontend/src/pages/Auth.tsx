@@ -63,30 +63,36 @@ export default function Auth({registering = false}) {
                             required
                         />
 
-                    {registering && <Input label="E-mail" type="text" name="email" placeholder="[Опціонально]" />}
+                        {registering && <Input label="Електронна пошта" type="text" name="email"/>}
 
-                    <Input
-                        label="Пароль"
-                        type="password"
-                        name="password"
-                        required
-                        {...(registering ? { placeholder: "12+ знаків" } : {})}
-                    />
+                        <Input
+                            label="Пароль"
+                            type="password"
+                            name="password"
+                            autoComplete="current-password"
+                            required
+                        />
 
-                    {registering && (
-                        <Input label="і ще раз" type="password" name="password2" required placeholder="Повтор паролю" />
-                    )}
-                </div>
-                <div className={styles.controls}>
-                    <Button to={registering ? "/login" : "/register"}>
-                        {registering ? "Увійти" : "Зареєструватись"}
-                    </Button>
-                    <Button type="submit" primary>
-                        {registering ? "Зареєструватись" : "Увійти"}
-                    </Button>
-                </div>
-            </form>
-        </div>
+                        {registering && <Input
+                            label="Підтвердження паролю"
+                            type="password"
+                            name="password2"
+                            autoComplete="new-password"
+                            required
+                        />}
+                    </div>
+                    <div className={styles.controls}>
+                        <Link to={registering ? "/login" : "/register"} className={styles.link}>
+                            {registering ?
+                                <span>Вже зареєстровані?<br/>Зайдіть у обліковий запис</span>
+                                : <span>Немає облікового запису?<br/>Зареєструйтеся</span>}
+                        </Link>
+                        <Button type="submit" primary>
+                            {registering ? "Зареєструватись" : "Увійти"}
+                        </Button>
+                    </div>
+                </form>
+            </div>
         </Main>
     );
 }
