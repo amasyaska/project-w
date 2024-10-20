@@ -43,9 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[validate_password]
     )
 
-    role = UserRoleField(
-        required=True,
-    )
+    role = UserRoleField(required=False)
 
     class Meta:
         model = CustomUser
