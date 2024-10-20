@@ -1,0 +1,4 @@
+.tag {
+    background-color: var(--color-light-gray);
+    border-radius: var(--border-radius-2);
+}
