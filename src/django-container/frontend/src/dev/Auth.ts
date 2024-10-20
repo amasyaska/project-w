@@ -48,5 +48,6 @@ export default function useTestAuth() {
         getUser: async () => ({}),
         getPosts,
         getPost,
+        createPost: async () => ({postId: 0}),
     };
 }

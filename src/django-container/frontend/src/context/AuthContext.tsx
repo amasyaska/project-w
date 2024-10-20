@@ -19,6 +19,7 @@ export type Post = {
     id: number;
     title: string;
     description: string;
+    tags?: string;
 };
 
 const defaultContext = {
@@ -30,6 +31,8 @@ const defaultContext = {
 
     getPosts: async () => ({} as BaseData & { posts: Post[] }),
     getPost: async (_params: getMessagesParams) => ({} as BaseData & { post?: Post }),
+
+    createPost: async (_params: Post) => ({} as BaseData & { postId: number }),
 };
 
 // context for managing authentication state
@@ -80,7 +83,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             register: async (params: registerParams) => {
-                const response = await client.post("register/", params);
+                const response = await client.post("user/", params);
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -108,6 +111,14 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
             getPost: async (params: getMessagesParams) => {
                 const postId = Number(params.postId);
                 const response = await client.get(`post/${postId}/`);
+                if (response.status !== 200) {
+                    return {};
+                }
+                return response.data;
+            },
+
+            createPost: async (params: Post) => {
+                const response = await client.post("post/", params);
                 if (response.status !== 200) {
                     return {};
                 }
