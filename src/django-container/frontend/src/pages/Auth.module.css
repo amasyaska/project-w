@@ -5,8 +5,8 @@
     justify-content: center;
 
     height: 100%;
-    width: 100%;
-    
+    width: max-content;
+
     padding: 1%;
 
     form {
@@ -24,7 +24,8 @@
             align-items: center;
             width: 100%;
             padding-top: 5%;
-            padding-bottom: 5%;            
+            padding-bottom: 5%;
+            gap: 8px;
         }
 
         label {
@@ -34,7 +35,7 @@
             width: 100%;
             margin-bottom: 4px;
         }
-        
+
         input {
             align-self: center;
             width: 100%;
@@ -55,15 +56,16 @@
             }
         }
 
-        .link {            
+        .link {
             background: none;
             text-align: center;
+
             &:hover {
                 outline: none;
                 text-decoration: underline;
                 opacity: 0.8;
             }
-        } 
+        }
     }
 }
 

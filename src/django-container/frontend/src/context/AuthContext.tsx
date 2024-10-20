@@ -28,7 +28,7 @@ const defaultContext = {
     register: async (_params: registerParams) => ({} as BaseData),
     getUser: async () => ({} as BaseData),
 
-    getPosts: async () => ({} as BaseData & { posts?: Post[] }),
+    getPosts: async () => ({} as BaseData & { posts: Post[] }),
     getPost: async (_params: getMessagesParams) => ({} as BaseData & { post?: Post }),
 };
 
@@ -37,7 +37,7 @@ export const AuthContext = createContext(defaultContext);
 
 // create a new axios client for making requests to the API
 const client = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/",
+    baseURL: "http://127.0.0.1:8080/api/",
     withCredentials: true,
     xsrfCookieName: "csrftoken",
     xsrfHeaderName: "X-CSRFTOKEN",
@@ -106,12 +106,6 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return response.data;
             },
             getPost: async (params: getMessagesParams) => {
-                return {
-                    post: {
-                        title: "Збір на FPV для 3 ОЩБ",
-                        description: "Збір коштів на 100 FPV",
-                    }
-                };
                 const postId = Number(params.postId);
                 const response = await client.get(`post/${postId}/`);
                 if (response.status !== 200) {
