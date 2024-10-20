@@ -3,16 +3,20 @@ import React from "react";
 
 type InputProps = {
     label?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+    text?:boolean;
+    className?:string;
+    [key:string]: unknown;
+};
 
-export default function Input({label, ...props}: InputProps) {
+export default function Input({label, text, ...props}: InputProps) {
     const className = [style.input, props.className].join(" ");
+    const inp = text ? <textarea {...props} className={className}/> : <input {...props} className={className}/>;
     return label ? (
         <label className={style.label}>
             {label}
-            <input {...props} className={className}/>
+            {inp}
         </label>
     ) : (
-        <input {...props} className={className}/>
+        inp
     );
 }
