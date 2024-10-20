@@ -65,7 +65,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
         () => ({
             user,
             login: async (params: loginParams) => {
-                const response = await client.post("login/", params);
+                const response = await client.post("login", params);
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -74,7 +74,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             logout: async () => {
-                const response = await client.post("logout/");
+                const response = await client.post("logout");
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -83,7 +83,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             register: async (params: registerParams) => {
-                const response = await client.post("user/", params);
+                const response = await client.post("user", params);
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -92,7 +92,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
                 return {};
             },
             getUser: async () => {
-                const response = await client.get("user/");
+                const response = await client.get("user");
                 console.log(response);
                 if (response.status !== 200) {
                     return {};
@@ -102,7 +102,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
             },
 
             getPosts: async () => {
-                const response = await client.get("posts/");
+                const response = await client.get("posts");
                 if (response.status !== 200) {
                     return {};
                 }
@@ -110,7 +110,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
             },
             getPost: async (params: getMessagesParams) => {
                 const postId = Number(params.postId);
-                const response = await client.get(`post/${postId}/`);
+                const response = await client.get(`post/${postId}`);
                 if (response.status !== 200) {
                     return {};
                 }
@@ -118,7 +118,7 @@ export function AuthProvider({children}: Readonly<{ children: React.ReactNode }>
             },
 
             createPost: async (params: Post) => {
-                const response = await client.post("post/", params);
+                const response = await client.post("post", params);
                 if (response.status !== 200) {
                     return {};
                 }
