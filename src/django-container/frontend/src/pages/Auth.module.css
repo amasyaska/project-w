@@ -1,0 +1,71 @@
+.auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    width: max-content;
+
+    padding: 1%;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-self: center;
+
+        width: fit-content;
+
+        .formFields {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding-top: 5%;
+            padding-bottom: 5%;
+            gap: 8px;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
+        input {
+            align-self: center;
+            width: 100%;
+            min-height: 100%;
+            margin-top: 1%;
+            border: 2px solid;
+            border-color: var(--color-dark-gray);
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+            margin-top: 16px;
+
+            :first-child {
+                width: 100%;
+            }
+        }
+
+        .link {
+            background: none;
+            text-align: center;
+
+            &:hover {
+                outline: none;
+                text-decoration: underline;
+                opacity: 0.8;
+            }
+        }
+    }
+}
+

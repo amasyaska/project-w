@@ -1,0 +1,10 @@
+.outer {
+    width: 100%;
+    flex: auto;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

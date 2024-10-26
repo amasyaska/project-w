@@ -25,6 +25,36 @@ by Wombats, Inc.
 5. ```docker compose build```
 6. ```docker compose up -d```
 7. go to ```localhost:8080```
+# endpoints
+\* – required field
+- /api/user
+   - GET | get user info
+      - JSON: {id*}
+   - POST | create user
+     - JSON: {username*, password*, email*}
+   - PUT | updates listed parameters
+      - JSON: {username, password, email}
+   - DELETE | deletes user
+      - JSON {id*}
+- /api/post
+   - GET | get post info
+      - JSON: {id*}
+   - POST | create post
+     - JSON: {user_id*, title*, content*, post_type*}
+   - PUT | updates listed parameters
+      - JSON: {title*, content*, post_type*}
+   - DELETE | deletes user
+      - JSON {id*}
+- /api/posts
+   - GET | get info about all posts by tags and request text
+      - JSON {search, tags}
+- /api/login
+   - POST | login user
+      - JSON: {username*, password*}
+- /api/logout
+   - POST | logout user
+      - JSON: {}
+
 # frontend
 React
 # backend

@@ -1,0 +1,5 @@
+.search {
+    width: 100%;
+    border: 2px solid;
+    border-color: var(--color-dark-gray);   
+}

@@ -1,0 +1,11 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.achievement {
+    display: flex;
+    background-color: var(--color-light-gray);
+    padding: 32px 64px;
+}

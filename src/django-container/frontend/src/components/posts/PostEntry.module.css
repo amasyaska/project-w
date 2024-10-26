@@ -1,0 +1,20 @@
+.postEntry {
+    background-color: var(--color-light-gray);
+    padding: 20px;
+    border-radius: var(--border-radius-2);
+    border: 2px solid var(--color-dark-gray);
+
+    h3 {
+        width: fit-content;
+        min-width: 50%;
+    }
+
+    h3::after {
+        /* override PageHeader margin */
+        margin-left: 0;
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
